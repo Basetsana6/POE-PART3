@@ -254,7 +254,8 @@ namespace WpfApp3
             }
             catch (Exception ex)
             {
-                // Don't crash — just show a placeholder
+                // Show full error to help debugging
+                MessageBox.Show($"Could not load tasks:\n{ex}", "DB Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 SetStatus($"DB unavailable: {ex.Message}");
             }
         }
@@ -386,9 +387,11 @@ namespace WpfApp3
                 dgLog.ItemsSource = entries;
                 txtLogInfo.Text = $"  Showing last {entries.Count} actions";
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"Could not load activity log:\n{ex}", "DB Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 txtLogInfo.Text = "  (DB unavailable — ensure MySQL is running)";
+                SetStatus("DB unavailable");
             }
         }
 
